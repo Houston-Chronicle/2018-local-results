@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- Font Aerdomr icons-->
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+	<!-- Bootstrap core CSS -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+	<!--load font awesome-->
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+	<!--[if lt IE 9]>
+	<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+	<!--AngularJS-->
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+	<!--Custom styles-->
+	<link rel='stylesheet' href="css/styles.css">
+	<!--Google Fonts-->
+	<link href="https://fonts.googleapis.com/css?family=Sanchez" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Lora" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+</head>
+<body is="responsive-body">
+	<div ng-app="myApp">
+		<!--Intro text-->
+		<div ng-controller="MyCtrl">
+			<div id="main">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-10 offset-md-1">
+							<div class="prologue col-md-10 offset-md-1">
+								<p id="invitation"><strong>Local results: See who won in local county races here</strong></p>
+								<p class="byline">By <a href="https://www.houstonchronicle.com/author/jordan-rubio/">Jordan Rubio</a>, <a href="https://www.houstonchronicle.com/author/rachael-gleason/">Rachael Gleason</a>, and <a href="https://www.houstonchronicle.com/author/matt-dempsey/">Matt Dempsey</a></p>
+								<p>Select a county below and see the results for all of the local races. Please note that these results come from the county and are unofficial.</p>
+								<p><em>Note: Top vote getters are in bold</em></p>
+							</div>
+						</div>
+					</div>
+					<!--Select county-->
+					<a id="search"></a><div class="col-md-10 offset-md-1">
+						<h4>Search for results by county</h4>
+						<select ng-model="allCounties" ng-options="county.county for county in counties">
+							<option value></option>
+						</select><!--End select county-->
+					</div>
+				</div>
+				<!--Results-->
+				<div class="results">
+					<div class="container">
+						<div class="row">
+							<div class="col-md-10 offset-md-1">
+								<div class="ng-hide" ng-show="allCounties" ng-repeat="county in counties | filter: allCounties">
+									<h1>Local results for {{county.county}} County</h1>
+									<div class="row">
+										<div ng-repeat="office in offices | filter: county.county" class="col-md-6">
+							              	<div class="races">
+							              		<h3>{{office.office}}</h3>
+							              		<div ng-repeat="result in results | filter: {county: county.county} | filter: office.office:true | orderBy: 'party'">
+						              				<p><span style="color:{{result.partyColor}};">{{result.party}}</span> <span ng-class="{'winner' : result.winner}">{{result.candidate}}</span>- {{result.percent}}% </p>
+							              		</div>
+							              	</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div><!--End results-->
+			</div>
+		</div>
+	</div><!--End app-->
+</body>
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<script src="js/ballot.js"></script>
+<script src="https://projects.sfchronicle.com/shared/js/responsive-child.js"></script>
+</body>
+</html>
